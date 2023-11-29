@@ -24,14 +24,14 @@ void SortByT(struct sensor* info,int n)
 
 long long int DateToInt(struct sensor* info)
 {
-	return info->year << 26 | info->month << 10 | info->day << 10 | info->hour << 6 | info->minute;
+	return (long long) info->year << 32 | info->month << 24 | info->day << 16 | info->hour << 8 | info->minute;
 }
 //упорядочивающую его по дате
 void SortByDate(struct sensor* info,int n)
 {
 	for(int i=0; i<n; ++i)
 		for(int j=i; j<n; ++j)
-			if(DateToInt(info+i+2)>= DateToInt(info+j+2))
+			if(DateToInt(info+i)>= DateToInt(info+j))
 				cgangeIJ(info,i,j);
 }
 
