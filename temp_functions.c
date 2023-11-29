@@ -22,20 +22,20 @@ void SortByT(struct sensor* info,int n)
 }
 
 
-unsigned int DateToInt(struct sensor* info)
+long long int DateToInt(struct sensor* info)
 {
-	return info->year << 16 | info->month << 8 | info->day | info->hour | info->minute;
+	return info->year << 26 | info->month << 10 | info->day << 10 | info->hour << 6 | info->minute;
 }
 //упорядочивающую его по дате
 void SortByDate(struct sensor* info,int n)
 {
 	for(int i=0; i<n; ++i)
 		for(int j=i; j<n; ++j)
-			if(DateToInt(info+i)>= DateToInt(info+j))
+			if(DateToInt(info+i+2)>= DateToInt(info+j+2))
 				cgangeIJ(info,i,j);
 }
 
-void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint64_t day,uint8_t hour,uint8_t minute,int8_t t)
+void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint8_t day,uint8_t hour,uint8_t minute,int8_t t)
 {
 	info[number].year = year;
 	info[number].month = month;
@@ -48,8 +48,8 @@ void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint6
 int AddInfo(struct sensor* info)
 {
 	int counter=0;
-	AddRecord(info,counter++,2021,9,16,13,10,9);
-	AddRecord(info,counter++,2022,10,2,22,30,-9);
+	AddRecord(info,counter++,2021,8,16,13,10,9);
+	AddRecord(info,counter++,2022,12,2,22,30,-9);
 	AddRecord(info,counter++,2021,1,7,8,15,8);
 	AddRecord(info,counter++,2021,9,5,16,7,1);
 	return counter;
@@ -59,7 +59,7 @@ void print(struct sensor* info,int number)
 {
 	printf("===================================\n");
 	for(int i=0;i<number;i++)
-		printf("%04d-%02d-%02llu-%02d-%02d t=%3d\n",
+		printf("%04d-%02d-%02d-%02d-%02d t=%3d\n",
 			info[i].year,
 			info[i].month,
 			info[i].day,

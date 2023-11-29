@@ -14,7 +14,7 @@ void cgangeIJ(struct sensor* info,int i,int j);
 //упорядочивающую его по неубыванию температуры
 void SortByT(struct sensor* info,int n);
 
-unsigned int DateToInt(struct sensor* info);
+long long int DateToInt(struct sensor* info);
 
 //упорядочивающую его по дате
 void SortByDate(struct sensor* info,int n);
