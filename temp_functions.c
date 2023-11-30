@@ -91,13 +91,13 @@ void AverMonthTemp (struct sensor* info, int n)
 	float aver = 0;
 	for (int i=0; i<=n; i++)
 	{
-		if (i == k)
+		if (info[i].month == k)
 		{
 			count++;
 			sum = sum + info[i].t;
-			printf("%d", info[i].t);
 		}
 	}
+	printf("%f.", sum);
 	aver = sum/count;
 	printf("%f.", aver);
 }
