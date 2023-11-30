@@ -79,21 +79,25 @@ void print(struct sensor* info,int number)
 		);
 }
 
-void AverMonthTemp (struct sensor* info)
+void AverMonthTemp (struct sensor* info, int n)
 
 {
-	int k=0;
+	int k;
 	printf("===================================\n");
 	printf ("Choose month number: ");
-	scanf ("%d\n", &k);
+	scanf ("%d", &k);
 	float sum = 0;
 	int count = 0;
 	float aver = 0;
-	while(k == info->month)
-		count++;
-	for (int i=0; i<=count; i++)
-		sum=sum + info[i].t;
-	printf ("%d", count);
+	for (int i=0; i<=n; i++)
+	{
+		if (i == k)
+		{
+			count++;
+			sum = sum + info[i].t;
+			printf("%d", info[i].t);
+		}
+	}
 	aver = sum/count;
 	printf("%f.", aver);
 }
