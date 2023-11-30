@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-void cgangeIJ(struct sensor* info,int i,int j)
+void changeIJ(struct sensor* info,int i,int j)
 
 {
 struct sensor temp;
@@ -18,7 +18,7 @@ void SortByT(struct sensor* info,int n)
 	for(int i=0; i<n; ++i)
 		for(int j=i; j<n; ++j)
 			if(info[i].t>=info[j].t)
-				cgangeIJ(info,i,j);
+				changeIJ(info,i,j);
 }
 
 
@@ -32,7 +32,7 @@ void SortByDate(struct sensor* info,int n)
 	for(int i=0; i<n; ++i)
 		for(int j=i; j<n; ++j)
 			if(DateToInt(info+i)>= DateToInt(info+j))
-				cgangeIJ(info,i,j);
+				changeIJ(info,i,j);
 }
 
 void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint8_t day,uint8_t hour,uint8_t minute,int8_t t)
@@ -47,12 +47,22 @@ void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint8
 
 int AddInfo(struct sensor* info)
 {
-	int counter=0;
-	AddRecord(info,counter++,2021,8,16,13,10,9);
-	AddRecord(info,counter++,2022,12,2,22,30,-9);
-	AddRecord(info,counter++,2021,1,7,8,15,8);
-	AddRecord(info,counter++,2021,9,5,16,7,1);
-	return counter;
+ int counter=0;
+ AddRecord(info,counter++,2021,8,16,13,10,9);
+ AddRecord(info,counter++,2022,12,2,22,30,-9);
+ AddRecord(info,counter++,2021,1,7,8,10,6);
+ AddRecord(info,counter++,2021,1,7,8,17,8);
+ AddRecord(info,counter++,2021,1,7,8,27,9); 
+ AddRecord(info,counter++,2021,10,5,12,55,1);
+ AddRecord(info,counter++,2021,9,5,17,10,3);
+ AddRecord(info,counter++,2021,9,5,20,45,2);
+ AddRecord(info,counter++,2021,9,4,15,11,4);
+ AddRecord(info,counter++,2021,10,4,12,23,1);
+ AddRecord(info,counter++,2021,9,4,6,34,3);
+ AddRecord(info,counter++,2021,8,3,11,6,5);
+ AddRecord(info,counter++,2021,9,3,1,8,4);
+ AddRecord(info,counter++,2021,9,3,8,14,1);
+ return counter;
 }
 
 void print(struct sensor* info,int number)
@@ -68,3 +78,44 @@ void print(struct sensor* info,int number)
 			info[i].t
 		);
 }
+
+void AverMonthTemp (struct sensor* info)
+
+{
+	int k=0;
+	printf("===================================\n");
+	printf ("Choose month number: ");
+	scanf ("%d\n", &k);
+	float sum = 0;
+	int count = 0;
+	float aver = 0;
+	while(k == info->month)
+		count++;
+	for (int i=0; i<=count; i++)
+		sum=sum + info[i].t;
+	printf ("%d", count);
+	aver = sum/count;
+	printf("%f.", aver);
+}
+
+/*
+void printAMT(float AverMonthTemp)
+{
+	printf("===================================\n");
+	printf("%2f.", AverMonthTemp);
+}
+*/
+
+
+
+
+//AverMonthTemp
+//MinTempPMonth
+//MaxTempPMonth
+//AverYearTemp
+//MinYearTemp
+//MaxYearTemp
+
+
+
+

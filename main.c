@@ -14,5 +14,8 @@ int number=AddInfo(info);
 	printf("\nSort by date\n");
 	SortByDate(info,number);
 	print(info,number);
+	printf("\nAverage temperature per month\n");
+	AverMonthTemp(info);
+	//printAMT(AverMonthTemp);
 	return 0;
 }
