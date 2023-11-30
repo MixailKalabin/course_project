@@ -27,5 +27,12 @@ void print(struct sensor* info,int number);
 
 void AverMonthTemp (struct sensor* info, int n);
 
-//void printAMT(float AverMonthTemp);
+void MinTempPerMonth (struct sensor* info, int n);
 
+void MaxTempPerMonth (struct sensor* info, int n);
+
+void AverYearTemp (struct sensor* info, int n);
+
+void MinYearTemp (struct sensor* info, int n);
+
+void MaxYearTemp (struct sensor* info, int n);

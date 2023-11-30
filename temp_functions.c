@@ -49,7 +49,11 @@ int AddInfo(struct sensor* info)
 {
  int counter=0;
  AddRecord(info,counter++,2021,8,16,13,10,9);
- AddRecord(info,counter++,2022,12,2,22,30,-9);
+ AddRecord(info,counter++,2021,12,2,22,30,-9);
+ AddRecord(info,counter++,2021,12,2,22,30,-21);
+ AddRecord(info,counter++,2021,12,2,22,30,-30);
+ AddRecord(info,counter++,2021,12,2,22,30,-15);
+ AddRecord(info,counter++,2021,12,2,22,30,-4);
  AddRecord(info,counter++,2021,1,7,8,10,6);
  AddRecord(info,counter++,2021,1,7,8,17,8);
  AddRecord(info,counter++,2021,1,7,8,27,9); 
@@ -62,12 +66,13 @@ int AddInfo(struct sensor* info)
  AddRecord(info,counter++,2021,8,3,11,6,5);
  AddRecord(info,counter++,2021,9,3,1,8,4);
  AddRecord(info,counter++,2021,9,3,8,14,1);
+ AddRecord(info,counter++,2021,9,3,8,14,1);
  return counter;
 }
 
 void print(struct sensor* info,int number)
 {
-	printf("===================================\n");
+	printf("===================================\n\n");
 	for(int i=0;i<number;i++)
 		printf("%04d-%02d-%02d-%02d-%02d t=%3d\n",
 			info[i].year,
@@ -97,28 +102,96 @@ void AverMonthTemp (struct sensor* info, int n)
 			sum = sum + info[i].t;
 		}
 	}
-	printf("%f.", sum);
 	aver = sum/count;
-	printf("%f.", aver);
+	printf("ATM = %f.\n", aver);
 }
 
-/*
-void printAMT(float AverMonthTemp)
+void MinTempPerMonth (struct sensor* info, int n)
+
 {
+	int k;
 	printf("===================================\n");
-	printf("%2f.", AverMonthTemp);
+	printf ("Choose month number: ");
+	scanf ("%d", &k);
+	int Min;
+	for (int i=0; i<=n; i++)
+	{
+		if (info[i].month == k)
+			if(info[i].t < info[i+1].t)
+				Min = info[i].t;
+	}
+	printf("Minimum t per month = %d\n", Min);
 }
-*/
 
 
+void MaxTempPerMonth (struct sensor* info, int n)
+{
+	int k;
+	printf("===================================\n");
+	printf ("Choose month number: ");
+	scanf ("%d", &k);
+	int Max;
+	for (int i=0; i<=n; i++)
+	{
+		if (info[i].month == k)
+			if(info[i].t > info[i+1].t)
+				Max = info[i].t;
+	}
+	printf("Maximum t per month = %d\n", Max);
+}
 
+void AverYearTemp (struct sensor* info, int n)
 
-//AverMonthTemp
-//MinTempPMonth
-//MaxTempPMonth
-//AverYearTemp
-//MinYearTemp
-//MaxYearTemp
+{
+	int k = info->year;
+	printf("===================================\n\n");
+	float sum = 0;
+	int count = 0;
+	float aver = 0;
+	for (int i=0; i<=n; i++)
+	{
+		if (k)
+		{
+			count++;
+			sum = sum + info[i].t;
+		}
+	}
+	aver = sum/count;
+	printf("Average temperature per %d year = %.2f\n", info->year, aver);
+}
+
+void MinYearTemp (struct sensor* info, int n)
+
+{
+	int k = info->year;
+	printf("===================================\n\n");
+	int Min;
+	for (int i=0; i<=n; i++)
+	{
+		if (k)
+			if(info[i].t < info[i+1].t)
+				Min = info[i].t;
+	}
+	printf("Minimum t per %d year = %d\n", info->year, Min);
+}
+
+void MaxYearTemp (struct sensor* info, int n)
+{
+	//int k = info->year;
+	printf("===================================\n\n");
+	int Max;
+	for (int i=0; i<n-2; i++)
+	{
+		if (info->year)
+			if(info[i].t >= info[i+1].t)
+			{
+				Max = info[i].t;
+				printf("%d\n", Max);
+			}
+	}
+	printf("Maximum t per %d year = %d\n", info->year, Max);
+}
+
 
 
 
