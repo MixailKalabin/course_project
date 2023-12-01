@@ -49,24 +49,24 @@ int AddInfo(struct sensor* info)
 {
  int counter=0;
  AddRecord(info,counter++,2021,8,16,13,10,9);
- AddRecord(info,counter++,2021,12,2,22,30,-9);
- AddRecord(info,counter++,2021,12,2,22,30,-21);
- AddRecord(info,counter++,2021,12,2,22,30,-30);
- AddRecord(info,counter++,2021,12,2,22,30,-15);
- AddRecord(info,counter++,2021,12,2,22,30,-4);
- AddRecord(info,counter++,2021,1,7,8,10,6);
- AddRecord(info,counter++,2021,1,7,8,17,8);
- AddRecord(info,counter++,2021,1,7,8,27,9); 
+ AddRecord(info,counter++,2021,12,2,10,30,-9);
+ AddRecord(info,counter++,2021,12,6,15,30,-2);
+ AddRecord(info,counter++,2021,12,10,22,30,-30);
+ AddRecord(info,counter++,2021,12,12,2,30,-15);
+ AddRecord(info,counter++,2021,12,16,12,30,-4);
+ AddRecord(info,counter++,2021,1,7,8,10,-21);
+ AddRecord(info,counter++,2021,1,9,8,17,-18);
+ AddRecord(info,counter++,2021,1,11,8,27,-19); 
  AddRecord(info,counter++,2021,10,5,12,55,1);
  AddRecord(info,counter++,2021,9,5,17,10,3);
- AddRecord(info,counter++,2021,9,5,20,45,2);
+ AddRecord(info,counter++,2021,9,7,20,45,2);
  AddRecord(info,counter++,2021,9,4,15,11,4);
  AddRecord(info,counter++,2021,10,4,12,23,1);
  AddRecord(info,counter++,2021,9,4,6,34,3);
- AddRecord(info,counter++,2021,8,3,11,6,5);
- AddRecord(info,counter++,2021,9,3,1,8,4);
- AddRecord(info,counter++,2021,9,3,8,14,1);
- AddRecord(info,counter++,2021,9,3,8,14,1);
+ AddRecord(info,counter++,2021,8,3,11,6,10);
+ AddRecord(info,counter++,2021,9,1,1,8,4);
+ AddRecord(info,counter++,2021,9,5,8,14,1);
+ AddRecord(info,counter++,2021,9,9,11,14,1);
  return counter;
 }
 
@@ -103,7 +103,7 @@ void AverMonthTemp (struct sensor* info, int n)
 		}
 	}
 	aver = sum/count;
-	printf("ATM = %f.\n", aver);
+	printf("Average temperature per %d month = %.2f\n", k, aver);
 }
 
 void MinTempPerMonth (struct sensor* info, int n)
@@ -114,13 +114,14 @@ void MinTempPerMonth (struct sensor* info, int n)
 	printf ("Choose month number: ");
 	scanf ("%d", &k);
 	int Min;
-	for (int i=0; i<=n; i++)
+	int i = 0;
+	while ((k == (info->month)) && i < n)
 	{
-		if (info[i].month == k)
-			if(info[i].t < info[i+1].t)
+			if (info[i].t < info[i+1].t)
 				Min = info[i].t;
+			i++;
 	}
-	printf("Minimum t per month = %d\n", Min);
+	printf("Minimum t per %d month = %d\n", k,  Min);
 }
 
 
@@ -131,26 +132,30 @@ void MaxTempPerMonth (struct sensor* info, int n)
 	printf ("Choose month number: ");
 	scanf ("%d", &k);
 	int Max;
-	for (int i=0; i<=n; i++)
+	for (int i=0; i<n; i++)
 	{
-		if (info[i].month == k)
-			if(info[i].t > info[i+1].t)
+		if(k == info[i].month)
+		{
+			Max = info[n-1].t;
+			if(info[i].t > Max)
 				Max = info[i].t;
+		}
 	}
-	printf("Maximum t per month = %d\n", Max);
+	printf("Maximum t per %d month = %d\n", k, Max);
 }
+
 
 void AverYearTemp (struct sensor* info, int n)
 
 {
-	int k = info->year;
+	int k = info[0].year;
 	printf("===================================\n\n");
 	float sum = 0;
 	int count = 0;
 	float aver = 0;
 	for (int i=0; i<=n; i++)
 	{
-		if (k)
+		if (info[i].year == k)
 		{
 			count++;
 			sum = sum + info[i].t;
@@ -163,33 +168,31 @@ void AverYearTemp (struct sensor* info, int n)
 void MinYearTemp (struct sensor* info, int n)
 
 {
-	int k = info->year;
+	int k = info[0].year;
 	printf("===================================\n\n");
 	int Min;
-	for (int i=0; i<=n; i++)
+	for (int i=1; i<=n; i++)
 	{
-		if (k)
-			if(info[i].t < info[i+1].t)
+		if (k == info[i].year)
+		{
+			Min = info[n].t;
+			if(Min > info[i].t)
 				Min = info[i].t;
+		}
 	}
-	printf("Minimum t per %d year = %d\n", info->year, Min);
+	printf("Minimum t per %d year = %d\n", k, Min);
 }
 
 void MaxYearTemp (struct sensor* info, int n)
 {
-	//int k = info->year;
+	int k = info[0].year;
 	printf("===================================\n\n");
-	int Max;
-	for (int i=0; i<n-2; i++)
-	{
-		if (info->year)
-			if(info[i].t >= info[i+1].t)
-			{
+	int Max=0;
+	for (int i=0; i<n; i++)
+		if(k == info[i].year)
+			if(Max < info[i].t)
 				Max = info[i].t;
-				printf("%d\n", Max);
-			}
-	}
-	printf("Maximum t per %d year = %d\n", info->year, Max);
+	printf("Maximum t per %d year = %d\n", k, Max);
 }
 
 

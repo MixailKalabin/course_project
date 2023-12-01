@@ -1,5 +1,5 @@
 #include <stdint.h>
-#define SIZE 30
+#define SIZE 3000
 
 struct sensor {
 	uint8_t day;
