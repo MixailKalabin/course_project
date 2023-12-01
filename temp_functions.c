@@ -114,12 +114,16 @@ void MinTempPerMonth (struct sensor* info, int n)
 	printf ("Choose month number: ");
 	scanf ("%d", &k);
 	int Min;
-	int i = 0;
-	while ((k == (info->month)) && i < n)
+	int i;
+	for(i=0;i<n-1;i++)
 	{
-			if (info[i].t < info[i+1].t)
+		for(int j=i+1;j<n;j++)
+		{
+			if (info[i].t <= info[j].t && info[i].month == k)
 				Min = info[i].t;
-			i++;
+			else
+				Min = info[j].t;
+		}
 	}
 	printf("Minimum t per %d month = %d\n", k,  Min);
 }
@@ -168,16 +172,16 @@ void AverYearTemp (struct sensor* info, int n)
 void MinYearTemp (struct sensor* info, int n)
 
 {
-	int k = info[0].year;
+	int k = 2021;
 	printf("===================================\n\n");
 	int Min;
-	for (int i=1; i<=n; i++)
+	for (int i=1; i<n; i++)
 	{
 		if (k == info[i].year)
 		{
-			Min = info[n].t;
-			if(Min > info[i].t)
-				Min = info[i].t;
+			Min = info[i].t;
+			if(Min > info[i+1].t)
+				Min = info[i+1].t;
 		}
 	}
 	printf("Minimum t per %d year = %d\n", k, Min);
@@ -185,13 +189,12 @@ void MinYearTemp (struct sensor* info, int n)
 
 void MaxYearTemp (struct sensor* info, int n)
 {
-	int k = info[0].year;
+	int k = 2021;
 	printf("===================================\n\n");
 	int Max=0;
 	for (int i=0; i<n; i++)
-		if(k == info[i].year)
-			if(Max < info[i].t)
-				Max = info[i].t;
+		if(Max < info[i].t)
+			Max = info[i].t;
 	printf("Maximum t per %d year = %d\n", k, Max);
 }
 
