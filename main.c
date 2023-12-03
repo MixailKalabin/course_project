@@ -5,7 +5,7 @@
 int main(void)
 
 {
-struct sensor info[SIZE];
+struct sensor* info = malloc(SIZE*sizeof(struct sensor));
 int number=AddInfo(info);
 	print(info,number);
 	printf("\nSort by t\n");
@@ -26,5 +26,6 @@ int number=AddInfo(info);
 	MinYearTemp (info, number);
 	printf("\nMaximum temperature per year - MaxTY\n");
 	MaxYearTemp (info, number);
+	free(info);
 	return 0;
 }

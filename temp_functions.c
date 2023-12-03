@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "temp_functions.h"
 #include <string.h>
+#include <stdlib.h>
 
 
 void changeIJ(struct sensor* info,int i,int j)
@@ -45,30 +46,34 @@ void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint8
 	info[number].t = t;
 }
 
+
 int AddInfo(struct sensor* info)
 {
- int counter=0;
- AddRecord(info,counter++,2021,8,16,13,10,9);
- AddRecord(info,counter++,2021,12,2,10,30,-9);
- AddRecord(info,counter++,2021,12,6,15,30,-2);
- AddRecord(info,counter++,2021,12,10,22,30,-30);
- AddRecord(info,counter++,2021,12,12,2,30,-15);
- AddRecord(info,counter++,2021,12,16,12,30,-4);
- AddRecord(info,counter++,2021,1,7,8,10,-21);
- AddRecord(info,counter++,2021,1,9,8,17,-18);
- AddRecord(info,counter++,2021,1,11,8,27,-19); 
- AddRecord(info,counter++,2021,10,5,12,55,1);
- AddRecord(info,counter++,2021,9,5,17,10,3);
- AddRecord(info,counter++,2021,9,7,20,45,2);
- AddRecord(info,counter++,2021,9,4,15,11,4);
- AddRecord(info,counter++,2021,10,4,12,23,1);
- AddRecord(info,counter++,2021,9,4,6,34,3);
- AddRecord(info,counter++,2021,8,3,11,6,10);
- AddRecord(info,counter++,2021,9,1,1,8,4);
- AddRecord(info,counter++,2021,9,5,8,14,1);
- AddRecord(info,counter++,2021,9,9,11,14,1);
- return counter;
+	FILE *open;
+	char name[] ="temperature_big.csv";
+	open = fopen(name, "r");
+	if(open==NULL)
+		return 1;
+	int counter = 0;
+	int Y, M, D, H, m, T ,n_scan;
+	while((n_scan = fscanf(open, "%d;%d;%d;%d;%d;%d", &Y, &M, &D, &H, &m, &T)) > 0)
+	{
+		if (n_scan < 6)
+		{
+			char s[20], c;
+			n_scan = fscanf(open, "%[^\n]%c", s, &c);
+			printf("Wrong format in line %s\n", s);
+		}
+		else
+		{
+			printf("%d; %d; %d; %d; %d; t = %d\n",Y,M,D,H,m,T);
+			AddRecord(info,counter++,Y,M,D,H,m,T);
+		}
+	}
+	fclose(open);
+	return counter;
 }
+
 
 void print(struct sensor* info,int number)
 {

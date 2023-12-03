@@ -1,5 +1,5 @@
 #include <stdint.h>
-#define SIZE 3000
+#define SIZE 530000
 
 struct sensor {
 	uint8_t day;
@@ -9,6 +9,7 @@ struct sensor {
 	uint8_t hour;
 	int8_t t;
 };
+
 void changeIJ(struct sensor* info,int i,int j);
 
 //упорядочивающую его по неубыванию температуры
@@ -36,3 +37,5 @@ void AverYearTemp (struct sensor* info, int n);
 void MinYearTemp (struct sensor* info, int n);
 
 void MaxYearTemp (struct sensor* info, int n);
+
+
