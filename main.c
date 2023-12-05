@@ -1,12 +1,25 @@
 #include <stdlib.h>
 #include "temp_functions.h"
 #include <stdio.h>
+#include <unistd.h>
 
-int main(void)
+int main(int argc, char *argv[])
 
 {
 struct sensor* info = malloc(SIZE*sizeof(struct sensor));
-int number=AddInfo(info);
+
+	int rez=0;
+	while ( (rez = getopt(argc,argv,"hf:m:")) != -1){
+		switch (rez){
+			case 'h': printf("found argument \"h\".\n"); break;
+			case 'f': printf("found argument \"b = %s\".\n",optarg); break;
+			case 'm': printf("found argument \"m = %s\".\n",optarg); break;
+			case '?': printf("Error found !\n");break;
+		};
+	};
+
+
+int number=AddInfo(info, "temperature_big.csv");
 	print(info,number);
 	printf("\nSort by t\n");
 	SortByT(info,number);

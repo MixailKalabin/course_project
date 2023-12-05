@@ -47,10 +47,10 @@ void AddRecord(struct sensor* info,int number, uint16_t year,uint8_t month,uint8
 }
 
 
-int AddInfo(struct sensor* info)
+int AddInfo(struct sensor* info, char name[])
 {
 	FILE *open;
-	char name[] ="temperature_big.csv";
+	//char name[] ="temperature_big.csv";
 	open = fopen(name, "r");
 	if(open==NULL)
 		return 1;
@@ -73,6 +73,7 @@ int AddInfo(struct sensor* info)
 	fclose(open);
 	return counter;
 }
+
 
 
 void print(struct sensor* info,int number)

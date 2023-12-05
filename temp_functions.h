@@ -22,7 +22,7 @@ void SortByDate(struct sensor* info,int n);
 
 void AddRecord(struct sensor* info,int number,uint16_t year,uint8_t month,uint8_t day,uint8_t hour,uint8_t minute,int8_t t);
 
-int AddInfo(struct sensor* info);
+int AddInfo(struct sensor* info, char name[]);
 
 void print(struct sensor* info,int number);
 
